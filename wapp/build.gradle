@@ -1,0 +1,142 @@
+import org.gradle.logging.StyledTextOutputFactory
+
+import static org.gradle.logging.StyledTextOutput.Style
+
+System.setProperty("org.gradle.color.failure", "RED")
+System.setProperty("org.gradle.color.progressstatus", "YELLOW")
+System.setProperty("org.gradle.color.success", "GREEN")
+
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "war"
+apply plugin: "eclipse"
+
+version = '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    def springVersion = "4.1.2.RELEASE"
+    def slf4jVersion = "1.7.7"
+
+    compile "joda-time:joda-time:2.5"
+    compile "com.google.guava:guava:18.0"
+    compile "org.jetbrains:annotations:13.0"
+
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+    compile "javax.servlet:jstl:1.2"
+    compile "javax.servlet.jsp:javax.servlet.jsp-api:2.3.2-b01"
+
+    compile "opensymphony:sitemesh:2.4.2"
+
+    compile "org.springframework:spring-core:$springVersion"
+    compile "org.springframework:spring-web:$springVersion"
+    compile "org.springframework:spring-webmvc:$springVersion"
+
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
+    compile "log4j:log4j:1.2.17"
+
+    testCompile "junit:junit:4.11"
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+    testCompile "org.mockito:mockito-core:1.10.8"
+    testCompile "org.springframework:spring-test:$springVersion"
+}
+
+test {
+
+    def out = services.get(StyledTextOutputFactory).create("personal-test")
+    out.style(Style.Normal)
+    def failedResults = []
+    def skippedResults = []
+
+    testLogging {
+        events = []
+
+        info {
+            events "failed", "skipped"
+            exceptionFormat "short"
+        }
+
+        debug {
+            events "started", "skipped", "failed"
+            exceptionFormat "full"
+        }
+
+    }
+
+    beforeSuite { descriptor ->
+        if (descriptor.className)
+            out.println("\n${descriptor.name}")
+    }
+
+    afterTest { descriptor, result ->
+        if (result.failedTestCount > 0)
+            failedResults.add(createExpando(descriptor, result))
+        else if (result.skippedTestCount > 0)
+            skippedResults.add(createExpando(descriptor, result))
+        out.text("   ").withStyle(getStyle(result)).println(descriptor.name)
+    }
+
+    afterSuite { descriptor, result ->
+        if (!descriptor.parent) {
+            printAllTestsStats(result, out)
+            for (skipped in skippedResults)
+                applyStackTrace(skipped, out)
+            for (singleResult in failedResults)
+                applyStackTrace(singleResult, out)
+        }
+    }
+}
+
+private void printAllTestsStats(result, out) {
+    out.println("\nNumber of tests    ${result.testCount}")
+    def stylePassed = isPassedSkippedOrFailed(result)
+    def styleFailed = (result.failedTestCount == 0) ?
+            Style.Success : Style.Failure
+    def styleSkipped = (result.skippedTestCount == 0) ?
+            Style.Success : Style.ProgressStatus
+    out.text("          passed   ")
+            .withStyle(stylePassed).println(result.successfulTestCount)
+    out.text("          failed   ")
+            .withStyle(styleFailed).println(result.failedTestCount)
+    out.text("          skipped  ")
+            .withStyle(styleSkipped).println(result.skippedTestCount)
+    out.println("")
+}
+
+private Style isPassedSkippedOrFailed(result) {
+    if (result.testCount == result.successfulTestCount)
+        Style.Success
+    else if (result.failedTestCount == 0)
+        Style.ProgressStatus
+    else
+        Style.Failure
+}
+
+private void applyStackTrace(singleResult, out) {
+    out.withStyle(singleResult.style).println(singleResult.path)
+    if (singleResult.message != null)
+        out.withStyle(singleResult.style).println(singleResult.message)
+    out.println(" ")
+}
+
+private Expando createExpando(descriptor, result) {
+    def localResult = new Expando()
+    def testPath = "${descriptor.parent.name}.${descriptor.name}"
+    localResult.path = testPath
+    localResult.message = result.exception
+    localResult.style = getStyle(result)
+    localResult
+}
+
+private Style getStyle(result) {
+    def style
+    if (result.failedTestCount > 0) style = Style.Failure
+    else if (result.skippedTestCount > 0) style = Style.ProgressStatus
+    else style = Style.Success
+    style
+}
