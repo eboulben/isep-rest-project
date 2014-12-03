@@ -4,5 +4,13 @@
 <html>
 <body>
 Home test foo enfin spece de ...
+
+<script type="text/javascript" src="<c:url value="/static/js/navbar.js"/>"></script>
+
+<script type="text/javascript">
+    var navbar = new navbar('#menu-home');
+    navbar.init();
+</script>
+
 </body>
 </html>
