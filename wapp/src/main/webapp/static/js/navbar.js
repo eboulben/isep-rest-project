@@ -1,12 +1,8 @@
-function navbar(idPage) {
-    this.page = idPage;
+function navbar() {
 }
 
-navbar.prototype.init = function () {
-    $('#menu-home').removeClass("active");
-    $('#menu-user').removeClass("active");
-    $('#menu-follow').removeClass("active");
-    if (/^#/.test(this.page) || /^./.test(this.page)) {
-        $(this.page).addClass("active");
+navbar.prototype.activateMenu = function (page) {
+    if (/^#/.test(page) || /^./.test(page)) {
+        $(page).addClass("active");
     }
 }

@@ -71,11 +71,7 @@
         </div>
     </nav>
 
-    <script type="text/javascript" src="<c:url value="/static/js/jquery-2.1.1.min.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/static/bootstrap/js/bootstrap.min.js"/>"></script>
-    <script type="text/javascript" src="<c:url value="/static/js/jquery-2.1.1.min.js"/>"></script>
-
-    <div class="">
+    <div class="main-content">
         <decorator:body/>
     </div>
 
@@ -100,8 +96,6 @@
         </div>
     </footer>
 </div>
-
-
 
 </body>
 
