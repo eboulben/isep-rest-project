@@ -1,0 +1,97 @@
+.dropdown-menu {
+    background-color: #222;
+}
+
+.dropdown-menu > li > a {
+    color: #9d9d9d;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #fff;
+    background: #222 none;
+}
+
+.dropdown-menu .input-group {
+    margin: 0 3px 5px 3px;
+}
+
+.dropdown-menu button {
+    margin: 0 3px 5px;
+    display: inline-block;
+    float: right;
+}
+
+.dropdown-menu > li.divider {
+    clear: right;
+    background-color: #080808;
+}
+
+.container {
+    padding: 0;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    padding: 30px 15px 15px;
+    margin-right: auto;
+    margin-left: auto;
+    display: block;
+}
+
+@media (min-width: 150px) {
+    .footer {
+        width: 146px;
+    }
+}
+
+@media (min-width: 250px) {
+    .footer {
+        width: 243px;
+    }
+}
+
+@media (min-width: 350px) {
+    .footer {
+        width: 342px;
+    }
+}
+
+@media (min-width: 450px) {
+    .footer {
+        width: 440px;
+    }
+}
+
+@media (min-width: 550px) {
+    .footer {
+        width: 537px;
+    }
+}
+
+@media (min-width: 650px) {
+    .footer {
+        width: 635px;
+    }
+}
+
+@media (min-width: 768px) {
+    .footer {
+        width: 750px;
+    }
+}
+@media (min-width: 992px) {
+    .footer {
+        width: 970px;
+    }
+}
+@media (min-width: 1200px) {
+    .footer {
+        width: 1170px;
+    }
+}
+
+.footer > div {
+    text-align: center;
+}
