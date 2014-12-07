@@ -76,7 +76,7 @@
     </div>
 
 
-    <footer class="footer">
+    <footer class="footer modal-footer">
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <a href="<c:url value="/about"/>">About us</a>
