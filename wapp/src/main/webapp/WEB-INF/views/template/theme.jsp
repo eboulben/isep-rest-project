@@ -32,7 +32,7 @@
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li id="menu-home"><a href="<c:url value="/home" />">Home</a></li>
-                <li id="menu-altoLabs"><a href="<c:url value="/user/altoLabs" />">@altoLab</a></li>
+                <li id="menu-altoLabs"><a href="<c:url value="/user/altoLabs" />">@altoLabs</a></li>
                 <li id="menu-glassFrance"><a href="<c:url value="/user/glassFrance" />">@GlassFrance</a></li>
                 <li id="menu-startupVillage"><a href="<c:url value="/user/startupVillage" />">@StartupVillage</a></li>
             </ul>

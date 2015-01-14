@@ -34,25 +34,29 @@ public class UserController {
     @RequestMapping(WebMapping.USER_GLASSFRANCE)
     public ModelAndView glassFrance() {
         ModelAndView mav = new ModelAndView();
+        List<TweetDto> tweetList = userService.getTweets("glassFrance");
         mav.setViewName(Views.USER.getPath());
         mav.addObject("user","GlassFrance");
+        mav.addObject("tweets",tweetList);
         return mav;
     }
 
     @RequestMapping(WebMapping.USER_ALTOLABS)
     public ModelAndView altoLabs() {
-        List<TweetDto> testList = userService.getTweets("altoLabs");
+        List<TweetDto> tweetList = userService.getTweets("altoLabs");
         ModelAndView mav = new ModelAndView();
         mav.setViewName(Views.USER.getPath());
-        mav.addObject("tweets",testList);
+        mav.addObject("tweets",tweetList);
         mav.addObject("user","AltoLabs");
         return mav;
     }
 
     @RequestMapping(WebMapping.USER_STARTUPVILLAGE)
     public ModelAndView startupVillage() {
+        List<TweetDto> tweetList = userService.getTweets("startupVillage");
         ModelAndView mav = new ModelAndView();
         mav.setViewName(Views.USER.getPath());
+        mav.addObject("tweets",tweetList);
         mav.addObject("user","StartupVillage");
         return mav;
     }

@@ -3,10 +3,21 @@
 
 <html>
 <body>
-<table>
-<c:forEach items="${tweets}" var="tweet">
-    ${tweet.authorName}
-</c:forEach>
+<table id="table-tweets" class="table">
+    <thead>
+        <tr>
+            <th>Tweet Author</th>
+            <th>Tweet Date</th>
+            <th>Tweet Content</th>
+        </tr>
+    </thead>
+    <c:forEach items="${tweets}" var="tweet">
+    <tr>
+        <th> ${tweet.authorName} </th>
+        <th> ${tweet.date} </th>
+        <th> ${tweet.message} </th>
+    </tr>
+    </c:forEach>
 </table>
 
 <script type="text/javascript" src="<c:url value="/static/js/jquery-2.1.1.min.js"/>"></script>
