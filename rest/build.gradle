@@ -11,4 +11,9 @@ repositories {
 
 dependencies {
 
+    def springVersion = "4.1.2.RELEASE"
+    def slf4jVersion = "1.7.7"
+    def jerseyVersion = "2.14"
+    def jacksonVersion = "1.9.13"
+
 }
