@@ -23,7 +23,17 @@ public class HomeController {
     public ModelAndView home() {
         logger.info("home Controller logger demonstration");
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
+        mv.addObject("update", "Update Database");
         mv.addObject("example", homeService.getExemple());
+        return mv;
+    }
+
+    @RequestMapping(WebMapping.UPDATE)
+    public ModelAndView homeAndUpdate() {
+        logger.info("Updating database");
+        ModelAndView mv = new ModelAndView(Views.HOME.getPath());
+        mv.addObject("update", "Database Updated");
+        mv.addObject("buttonState", "disabled");
         return mv;
     }
 
