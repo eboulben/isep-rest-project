@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface UserService {
     public String getExemple();
-    public List<TweetDto> getTweets();
+    public List<TweetDto> getTweets(String authorName);
 }
