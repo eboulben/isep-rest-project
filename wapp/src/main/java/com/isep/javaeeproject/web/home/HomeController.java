@@ -1,9 +1,11 @@
 package com.isep.javaeeproject.web.home;
 
+import com.isep.javaeeproject.service.home.HomeService;
 import com.isep.javaeeproject.web.mapping.Views;
 import com.isep.javaeeproject.web.mapping.WebMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,10 +16,15 @@ public class HomeController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Autowired
+    private HomeService homeService;
+
     @RequestMapping
     public ModelAndView home() {
         logger.info("home Controller logger demonstration");
-        return new ModelAndView(Views.HOME.getPath());
+        ModelAndView mv = new ModelAndView(Views.HOME.getPath());
+        mv.addObject("example", homeService.getExemple());
+        return mv;
     }
 
 }
