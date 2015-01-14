@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@ContextConfiguration(locations = {"classpath:spring-mvc-context.xml"})
+@ContextConfiguration(locations = {"classpath:test-spring-mvc-context.xml"})
 @WebAppConfiguration
 public abstract class ControllerSimpleTest {
 
