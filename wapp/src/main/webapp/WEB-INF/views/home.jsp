@@ -3,7 +3,6 @@
 
 <html>
 <body>
-Home test foo enfin spece de ...
 
 ${example}
 

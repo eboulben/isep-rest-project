@@ -11,7 +11,22 @@ User page
 
 <script type="text/javascript">
     var navbar = new navbar();
-    navbar.activateMenu('#menu-user');
+    $user = "${user}";
+    switch ($user) {
+        case "GlassFrance" :
+                $id = "#menu-glassFrance";
+                break;
+        case "AltoLabs" :
+                $id = "#menu-altoLabs";
+                break;
+        case "StartupVillage" :
+                $id = "#menu-startupVillage";
+                break;
+        default :
+                $id = "#menu-home";
+                break;
+    }
+    navbar.activateMenu($id);
 </script>
 
 </body>
