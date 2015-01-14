@@ -1,7 +1,9 @@
 package com.isep.javaeeproject.web.user;
 
+import com.isep.javaeeproject.service.user.UserService;
 import com.isep.javaeeproject.web.mapping.Views;
 import com.isep.javaeeproject.web.mapping.WebMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,6 +15,9 @@ import java.util.Map;
 @RequestMapping(WebMapping.USER)
 
 public class UserController {
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping
     public ModelAndView index() {
