@@ -1,3 +1,11 @@
+import org.gradle.logging.StyledTextOutputFactory
+
+import static org.gradle.logging.StyledTextOutput.Style
+
+System.setProperty("org.gradle.color.failure", "RED")
+System.setProperty("org.gradle.color.progressstatus", "YELLOW")
+System.setProperty("org.gradle.color.success", "GREEN")
+
 apply plugin: "java"
 apply plugin: "idea"
 apply plugin: "war"
@@ -15,5 +23,147 @@ dependencies {
     def slf4jVersion = "1.7.7"
     def jerseyVersion = "2.14"
     def jacksonVersion = "1.9.13"
+    def hibernateVersion = "4.2.16.Final"
 
+    compile("org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion") {
+        exclude group: "org.springframework", module: "spring-core"
+        exclude group: "org.springframework", module: "spring-web"
+        exclude group: "org.springframework", module: "spring-beans"
+    }
+    compile "org.glassfish.jersey.media:jersey-media-json-jackson:$jerseyVersion"
+    compile "org.glassfish.jersey.media:jersey-media-multipart:$jerseyVersion"
+    compile "org.glassfish.jersey.ext:jersey-entity-filtering:$jerseyVersion"
+
+    compile "org.springframework:spring-core:$springVersion"
+    compile("org.springframework:spring-context:$springVersion") {
+        exclude group: "commons-logging", module: "commons-logging"
+    }
+    compile "org.springframework:spring-web:$springVersion"
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile "org.springframework:spring-tx:$springVersion"
+    compile "org.springframework:spring-orm:$springVersion"
+
+    compile "mysql:mysql-connector-java:5.1.34"
+
+    compile "org.apache.tomcat:tomcat-jdbc:8.0.15"
+
+    compile "org.hibernate:hibernate-core:$hibernateVersion"
+    compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final"
+    compile "org.hibernate:hibernate-entitymanager:$hibernateVersion"
+
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
+    compile "log4j:log4j:1.2.17"
+
+    compile "org.codehaus.jackson:jackson-core-asl:$jacksonVersion"
+    compile "org.codehaus.jackson:jackson-mapper-asl:$jacksonVersion"
+    compile "org.codehaus.jackson:jackson-jaxrs:$jacksonVersion"
+
+    compile "javax.servlet:javax.servlet-api:3.1.0"
+
+    testCompile "org.glassfish.jersey.core:jersey-client:$jerseyVersion"
+    testCompile "commons-dbcp:commons-dbcp:1.4"
+    testCompile "commons-beanutils:commons-beanutils:1.9.2"
+    testCompile "org.springframework:spring-test:$springVersion"
+    testCompile "junit:junit:4.11"
+    testCompile "org.mockito:mockito-all:1.10.8"
+    testCompile "org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-external:2.13"
+
+
+}
+
+
+test {
+
+    def out = services.get(StyledTextOutputFactory).create("personal-test")
+    out.style(Style.Normal)
+    def failedResults = []
+    def skippedResults = []
+
+    testLogging {
+        events = []
+
+        info {
+            events "failed", "skipped"
+            exceptionFormat "short"
+        }
+
+        debug {
+            events "started", "skipped", "failed"
+            exceptionFormat "full"
+        }
+
+    }
+
+    beforeSuite { descriptor ->
+        if (descriptor.className)
+            out.println("\n${descriptor.name}")
+    }
+
+    afterTest { descriptor, result ->
+        if (result.failedTestCount > 0)
+            failedResults.add(createExpando(descriptor, result))
+        else if (result.skippedTestCount > 0)
+            skippedResults.add(createExpando(descriptor, result))
+        out.text("   ").withStyle(getStyle(result)).println(descriptor.name)
+    }
+
+    afterSuite { descriptor, result ->
+        if (!descriptor.parent) {
+            printAllTestsStats(result, out)
+            for (skipped in skippedResults)
+                applyStackTrace(skipped, out)
+            for (singleResult in failedResults)
+                applyStackTrace(singleResult, out)
+        }
+    }
+}
+
+private void printAllTestsStats(result, out) {
+    out.println("\nNumber of tests    ${result.testCount}")
+    def stylePassed = isPassedSkippedOrFailed(result)
+    def styleFailed = (result.failedTestCount == 0) ?
+            Style.Success : Style.Failure
+    def styleSkipped = (result.skippedTestCount == 0) ?
+            Style.Success : Style.ProgressStatus
+    out.text("          passed   ")
+            .withStyle(stylePassed).println(result.successfulTestCount)
+    out.text("          failed   ")
+            .withStyle(styleFailed).println(result.failedTestCount)
+    out.text("          skipped  ")
+            .withStyle(styleSkipped).println(result.skippedTestCount)
+    out.println("")
+}
+
+private Style isPassedSkippedOrFailed(result) {
+    if (result.testCount == result.successfulTestCount)
+        Style.Success
+    else if (result.failedTestCount == 0)
+        Style.ProgressStatus
+    else
+        Style.Failure
+}
+
+private void applyStackTrace(singleResult, out) {
+    out.withStyle(singleResult.style).println(singleResult.path)
+    if (singleResult.message != null)
+        out.withStyle(singleResult.style).println(singleResult.message)
+    out.println(" ")
+}
+
+private Expando createExpando(descriptor, result) {
+    def localResult = new Expando()
+    def testPath = "${descriptor.parent.name}.${descriptor.name}"
+    localResult.path = testPath
+    localResult.message = result.exception
+    localResult.style = getStyle(result)
+    localResult
+}
+
+private Style getStyle(result) {
+    def style
+    if (result.failedTestCount > 0) style = Style.Failure
+    else if (result.skippedTestCount > 0) style = Style.ProgressStatus
+    else style = Style.Success
+    style
 }
