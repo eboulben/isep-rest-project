@@ -33,7 +33,7 @@ public class HomeController {
         logger.info("Updating database");
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
         mv.addObject("update", "Database Updated");
-        mv.addObject("buttonState", "disabled");
+        mv.addObject("buttonUpdateState", "disabled");
         return mv;
     }
 

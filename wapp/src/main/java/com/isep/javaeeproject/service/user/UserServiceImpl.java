@@ -10,11 +10,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Override
-    public String getExemple() {
-        return "test";
-    }
-
-    @Override
     public List<TweetDto> getTweets(String authorName) {
         return getMock();
     }

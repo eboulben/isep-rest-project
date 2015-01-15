@@ -3,6 +3,10 @@
 
 <html>
 <body>
+<button id="return" type="button" class="btn btn-default">
+    <i class="glyphicon glyphicon-chevron-left"></i>
+</button>
+<br>
 <table id="table-tweets" class="table">
     <thead>
         <tr>
@@ -26,22 +30,10 @@
 
 <script type="text/javascript">
     var navbar = new navbar();
-    $user = "${user}";
-    switch ($user) {
-        case "GlassFrance" :
-                $id = "#menu-glassFrance";
-                break;
-        case "AltoLabs" :
-                $id = "#menu-altoLabs";
-                break;
-        case "StartupVillage" :
-                $id = "#menu-startupVillage";
-                break;
-        default :
-                $id = "#menu-home";
-                break;
-    }
-    navbar.activateMenu($id);
+    navbar.activateMenu("#menu-users");
+    $("#return").click(function() {
+        parent.history.back();
+    });
 </script>
 
 </body>
