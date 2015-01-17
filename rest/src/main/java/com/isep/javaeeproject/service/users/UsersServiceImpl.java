@@ -18,7 +18,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users getUsers(long id) {
+    public Users getUser(long id) {
         return new Users(id, "hurra !");
     }
 }

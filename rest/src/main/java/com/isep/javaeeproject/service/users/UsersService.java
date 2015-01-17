@@ -8,6 +8,6 @@ public interface UsersService {
 
     public List<Users> getAllUsers();
 
-    public Users getUsers(final long id);
+    public Users getUser(final long id);
 
 }

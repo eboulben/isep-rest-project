@@ -8,6 +8,6 @@ public interface TweetsService {
 
     public List<Tweets> getAllTweets();
 
-    public Tweets getTweets(final long id);
+    public Tweets getTweet(final long id);
 
 }

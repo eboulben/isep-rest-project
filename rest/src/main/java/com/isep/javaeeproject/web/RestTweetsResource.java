@@ -29,7 +29,7 @@ public class RestTweetsResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Tweets tweet(@PathParam("id") final long id) {
-        return tweetsService.getTweets(id);
+        return tweetsService.getTweet(id);
     }
 
 }

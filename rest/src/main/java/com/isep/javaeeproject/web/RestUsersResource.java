@@ -29,7 +29,7 @@ public class RestUsersResource {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Users user(@PathParam("id") long id) {
-        return usersService.getUsers(id);
+        return usersService.getUser(id);
     }
 
 }

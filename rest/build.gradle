@@ -23,6 +23,8 @@ dependencies {
     def jacksonVersion = "1.9.13"
     def hibernateVersion = "4.2.16.Final"
 
+    compile "com.google.guava:guava:18.0"
+
     compile("org.glassfish.jersey.ext:jersey-spring3:$jerseyVersion") {
         exclude group: "org.springframework", module: "spring-core"
         exclude group: "org.springframework", module: "spring-web"

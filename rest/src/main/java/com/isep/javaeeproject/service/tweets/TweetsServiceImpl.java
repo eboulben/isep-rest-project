@@ -1,6 +1,11 @@
 package com.isep.javaeeproject.service.tweets;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 import com.isep.javaeeproject.domain.model.tweets.Tweets;
+import com.isep.javaeeproject.domain.model.tweets.TweetsEntity;
+import com.isep.javaeeproject.domain.repository.tweets.TweetsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,16 +15,19 @@ import java.util.List;
 @Service
 public class TweetsServiceImpl implements TweetsService {
 
+    @Autowired
+    private TweetsRepository tweetsRepository;
+
     @Override
     public List<Tweets> getAllTweets() {
-        List<Tweets> listOfTweets = new ArrayList<>();
-        listOfTweets.add(new Tweets(12345l, 8765l, "@test", "hurra 2 for test!", new Date()));
-        listOfTweets.add(new Tweets(3524l, 2527l, "@elVivaTest", "Viva el Useless", new Date(456789)));
-        return listOfTweets;
+        List<TweetsEntity> allTweetsEntity = tweetsRepository.getAllTweets();
+
+        return Lists.transform(allTweetsEntity,
+                input -> new Tweets(input));
     }
 
     @Override
-    public Tweets getTweets(final long id) {
+    public Tweets getTweet(final long id) {
         return new Tweets(id, 8765l, "@test", "hurra for test!", new Date());
     }
 }
