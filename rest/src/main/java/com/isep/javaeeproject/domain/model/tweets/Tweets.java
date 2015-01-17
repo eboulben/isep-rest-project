@@ -10,9 +10,6 @@ public class Tweets implements Serializable {
 
     private static final long serialVersionUID = 4268044988849793635L;
 
-    @XmlElement(name = "id")
-    private long id;
-
     @XmlElement(name = "idTweets")
     private long idTweets;
 
@@ -45,14 +42,6 @@ public class Tweets implements Serializable {
         this.author = tweetsEntity.getAuthor();
         this.message = tweetsEntity.getMessage();
         this.date = tweetsEntity.getDate();
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public long getIdTweets() {
@@ -102,7 +91,6 @@ public class Tweets implements Serializable {
 
         Tweets tweets = (Tweets) o;
 
-        if (id != tweets.id) return false;
         if (idAuthor != tweets.idAuthor) return false;
         if (idTweets != tweets.idTweets) return false;
         if (!author.equals(tweets.author)) return false;
@@ -122,8 +110,7 @@ public class Tweets implements Serializable {
     @Override
     public String toString() {
         return "Tweets{" +
-                "id=" + id +
-                ", idTweets=" + idTweets +
+                "idTweets=" + idTweets +
                 ", idAuthor=" + idAuthor +
                 ", author='" + author + '\'' +
                 ", message='" + message + '\'' +
