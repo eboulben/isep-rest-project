@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 @Controller
 @RequestMapping(WebMapping.HOME)
 public class HomeController {
@@ -23,7 +25,8 @@ public class HomeController {
     public ModelAndView home() {
         logger.info("home Controller logger demonstration");
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
-        mv.addObject("update", "Update Database");
+        ArrayList<String> users = homeService.getUsers();
+        mv.addObject("users",users);
         mv.addObject("example", homeService.getExemple());
         return mv;
     }

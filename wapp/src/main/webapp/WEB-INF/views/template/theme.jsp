@@ -32,35 +32,19 @@
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li id="menu-home"><a href="<c:url value="/home" />">Home</a></li>
-                <li id="menu-users"><a href="<c:url value="/users"/>">Users</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="">Login<b
+                <li id="button_dropdown" class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="">Filter authors<b
                             class="caret"></b></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li>
-                            <form>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span
-                                            class="glyphicon glyphicon-user"></span></span>
-                                    <input type="text" class="form-control" placeholder="Username">
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span
-                                            class="glyphicon glyphicon-pencil"></span></span>
-                                    <input type="password" class="form-control" placeholder="Password">
-                                </div>
-                                <button type="button" class="btn btn-default btn-sm "><span
-                                        class="glyphicon glyphicon-cloud-upload"></span> Login
-                                </button>
-                            </form>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="<c:url value="/signin"/>">Sign in</a></li>
+                    <ul id="authors_box" role="menu" class="dropdown-menu">
+                        <c:forEach var="user" items="${users}">
+                            <li id="filter_${user}"><a href="" onclick="return false">${user}</a></li>
+                        </c:forEach>
                     </ul>
 
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="update_button"><a href="" onclick="return false">Update Database</a></li>
             </ul>
             <form role="search" class="navbar-form navbar-right">
                 <div class="form-group">
@@ -96,6 +80,7 @@
     </footer>
 </div>
 
+<script type="text/javascript" src="<c:url value="/static/js/theme.js"/>"></script>
 </body>
 
 </html>

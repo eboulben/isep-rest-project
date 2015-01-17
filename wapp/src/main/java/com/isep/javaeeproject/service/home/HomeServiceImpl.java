@@ -2,6 +2,8 @@ package com.isep.javaeeproject.service.home;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class HomeServiceImpl implements HomeService {
 
@@ -14,12 +16,16 @@ public class HomeServiceImpl implements HomeService {
     public void updateDatabase() {    }
 
     @Override
-    public String getUsers() {
+    public ArrayList<String> getUsers() {
         return getMockUsers();
     }
 
-    private String getMockUsers() {
-        return "AltoLabs, GlassFrance, StartupVillage";
+    private ArrayList<String> getMockUsers() {
+        ArrayList<String> result = new ArrayList<>();
+        result.add(0, "AltoLabs");
+        result.add(1, "GlassFrance");
+        result.add(2, "StartupVillage");
+        return result;
     }
 
 }
