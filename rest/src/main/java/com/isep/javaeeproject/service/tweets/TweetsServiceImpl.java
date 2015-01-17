@@ -7,6 +7,7 @@ import com.isep.javaeeproject.domain.repository.tweets.TweetsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,10 @@ public class TweetsServiceImpl implements TweetsService {
 
     @Override
     public Tweets getTweet(final long id) {
-        TweetsEntity test = new TweetsEntity(id, 8765l, "@test", "hurra for test!", new Date());
-        return new Tweets(test);
+        try {
+            return new Tweets(tweetsRepository.getTweet(id));
+        } catch (NoResultException e) {
+            return new Tweets();
+        }
     }
-}
+ }
