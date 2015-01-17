@@ -1,6 +1,5 @@
 package com.isep.javaeeproject.web.home;
 
-import com.google.common.collect.Maps;
 import com.isep.javaeeproject.dto.user.TweetDto;
 import com.isep.javaeeproject.service.home.HomeService;
 import com.isep.javaeeproject.service.user.UserService;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping(WebMapping.HOME)
@@ -37,23 +34,22 @@ public class HomeController {
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
         List<String> users = homeService.getUsers();
         List<TweetDto> tweets = userService.getAllTweets();
-        mv.addObject("users",users);
+        mv.addObject("users", users);
         mv.addObject("tweets", tweets);
-        mv.addObject("example", homeService.getExemple());
         return mv;
     }
 
     @ResponseBody
     @RequestMapping(WebMapping.UPDATE)
     public String response() {
-        if(homeService.updateDatabase()) {
+        if (homeService.updateDatabase()) {
             return "1";
         } else {
             return "0";
         }
     }
 
-    @RequestMapping(WebMapping.GETTWEETS)
+    @RequestMapping(WebMapping.GET_TWEETS)
     public ModelAndView responseTweets(@PathVariable("author") String author) {
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
         List<TweetDto> tweets = userService.getTweets(author);

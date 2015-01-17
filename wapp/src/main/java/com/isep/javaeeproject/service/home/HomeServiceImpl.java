@@ -8,11 +8,6 @@ import java.util.ArrayList;
 public class HomeServiceImpl implements HomeService {
 
     @Override
-    public String getExemple() {
-        return "this is an exemple";
-    }
-
-    @Override
     public boolean updateDatabase() {
         return true;
     }
