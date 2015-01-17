@@ -1,70 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="
-		http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-
-		http://www.springframework.org/schema/tx
-		http://www.springframework.org/schema/tx/spring-tx.xsd
-
+        http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/data/jpa
+	    http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd">
 
-    <context:component-scan base-package="com.isep.javaeeproject.*" />
+    <bean id="moduleDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"
+          p:driverClassName="com.mysql.jdbc.Driver"
+          p:url="${datasource.url}"
+          p:defaultAutoCommit="false"
+          p:username="{datasource.user}"
+          p:password="{datasource.password}"
+          p:maxIdle="8"
+          p:testOnBorrow="false"
+          p:testWhileIdle="false"
+          p:timeBetweenEvictionRunsMillis="300000"
+          p:numTestsPerEvictionRun="3"
+          p:minEvictableIdleTimeMillis="600000"/>
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
-
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
-
-    <bean id="transactionManagerLegacy" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactoryLegacy" />
-    </bean>
-
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="classpath:config/persistence.xml" />
-        <property name="persistenceUnitName" value="demoRestPersistence" />
-        <property name="dataSource" ref="restDemoDS" />
-        <property name="packagesToScan" value="com.isep.javaeeproject.*" />
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="showSql" value="true" />
-                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-            </bean>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:persistenceUnitName="restPersistenceUnit">
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.order_inserts">true</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+            </props>
         </property>
     </bean>
 
-    <bean id="entityManagerFactoryLegacy" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="persistenceXmlLocation" value="classpath:config/persistence-demo.xml" />
-        <property name="persistenceUnitName" value="demoRestPersistenceLegacy" />
-        <property name="dataSource" ref="restDemoLegacyDS" />
-        <property name="packagesToScan" value="com.isep.javaeeproject.*" />
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="showSql" value="true" />
-                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-            </bean>
-        </property>
-    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+          p:entityManagerFactory-ref="entityManagerFactory"/>
 
-    <!--<bean id="podcastDao" class="org.codingpedia.demo.rest.dao.PodcastDaoJPA2Impl"/>-->
-    <!--<bean id="podcastService" class="org.codingpedia.demo.rest.service.PodcastServiceDbAccessImpl" />-->
-    <!--<bean id="podcastsResource" class="org.codingpedia.demo.rest.resource.podcast.PodcastsResource" />-->
-    <!--<bean id="podcastLegacyResource" class="org.codingpedia.demo.rest.resource.podcast.PodcastLegacyResource" />-->
+    <jpa:repositories base-package="com.isep.javaeeproject.domain.repository"
+                      entity-manager-factory-ref="entityManagerFactory"/>
 
-    <!--<bean id="versionService" class="org.codingpedia.demo.rest.resource.manifest.ManifestService" />-->
-
-    <bean id="restDemoDS" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/jdbc/restDemoDB" />
-        <property name="resourceRef" value="true" />
-    </bean>
-
-    <bean id="restDemoLegacyDS" class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:comp/env/jdbc/restDemoLegacyDB" />
-        <property name="resourceRef" value="true" />
-    </bean>
+    <context:component-scan base-package="com.isep.javaeeproject.domain.repository"/>
 
 </beans>
