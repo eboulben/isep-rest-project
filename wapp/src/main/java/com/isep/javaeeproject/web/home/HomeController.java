@@ -1,5 +1,6 @@
 package com.isep.javaeeproject.web.home;
 
+import com.google.common.collect.Maps;
 import com.isep.javaeeproject.dto.user.TweetDto;
 import com.isep.javaeeproject.service.home.HomeService;
 import com.isep.javaeeproject.service.user.UserService;
@@ -9,12 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(WebMapping.HOME)
@@ -48,6 +51,15 @@ public class HomeController {
         } else {
             return "0";
         }
+    }
+
+    @RequestMapping(WebMapping.GETTWEETS)
+    public ModelAndView responseTweets(@PathVariable("author") String author) {
+        ModelAndView mv = new ModelAndView(Views.HOME.getPath());
+        List<TweetDto> tweets = userService.getTweets(author);
+        mv.addObject("tweets", tweets);
+        mv.addObject("users", homeService.getUsers());
+        return mv;
     }
 
 }

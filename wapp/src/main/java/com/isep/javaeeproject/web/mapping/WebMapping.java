@@ -12,6 +12,7 @@ public final class WebMapping {
     public static final String USER_ALTOLABS = "/altoLabs";
     public static final String USER_STARTUPVILLAGE = "/startupVillage";
     public static final String USER_GLASSFRANCE = "/glassFrance";
+    public static final String GETTWEETS = "/getTweet/{author}";
 
     private WebMapping() {
     }
