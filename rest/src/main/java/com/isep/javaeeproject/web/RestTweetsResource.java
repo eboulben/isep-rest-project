@@ -28,7 +28,7 @@ public class RestTweetsResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Tweets tweet(@PathParam("id") final Long id) {
+    public Tweets tweet(@PathParam("id") final long id) {
         return tweetsService.getTweets(id);
     }
 
