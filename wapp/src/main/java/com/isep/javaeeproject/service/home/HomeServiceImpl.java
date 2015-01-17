@@ -13,7 +13,9 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public void updateDatabase() {    }
+    public boolean updateDatabase() {
+        return true;
+    }
 
     @Override
     public ArrayList<String> getUsers() {

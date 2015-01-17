@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public interface HomeService {
     public String getExemple();
-    public void updateDatabase();
+    public boolean updateDatabase();
     public ArrayList<String> getUsers();
 }
