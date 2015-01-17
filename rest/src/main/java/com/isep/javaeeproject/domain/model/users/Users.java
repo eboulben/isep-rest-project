@@ -17,7 +17,7 @@ public class Users implements Serializable {
     @XmlElement(name = "author")
     private String author;
 
-    public Users(){
+    public Users() {
     }
 
     public Users(long idAuthor, String author) {

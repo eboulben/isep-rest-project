@@ -1,7 +1,5 @@
 package com.isep.javaeeproject.domain.model.tweets;
 
-import org.springframework.beans.BeanUtils;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -42,7 +40,11 @@ public class Tweets implements Serializable {
     }
 
     public Tweets(TweetsEntity tweetsEntity) {
-        BeanUtils.copyProperties(this, tweetsEntity);
+        this.idTweets = tweetsEntity.getIdTweets();
+        this.idAuthor = tweetsEntity.getIdAuthor();
+        this.author = tweetsEntity.getAuthor();
+        this.message = tweetsEntity.getMessage();
+        this.date = tweetsEntity.getDate();
     }
 
     public long getId() {

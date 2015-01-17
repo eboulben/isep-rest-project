@@ -14,10 +14,10 @@
 
     <bean id="moduleDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"
           p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="${datasource.url}"
+          p:url="jdbc:mysql://localhost:3306/rest_tweets"
           p:defaultAutoCommit="false"
-          p:username="{datasource.user}"
-          p:password="{datasource.password}"
+          p:username="emilien"
+          p:password="oiupherg97y235tikhsreg9ow4hjgefg9"
           p:maxIdle="8"
           p:testOnBorrow="false"
           p:testWhileIdle="false"
@@ -26,7 +26,7 @@
           p:minEvictableIdleTimeMillis="600000"/>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-          p:persistenceUnitName="restPersistenceUnit">
+          p:persistenceUnitName="restPersistenceUnit" p:dataSource-ref="moduleDataSource">
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
@@ -40,8 +40,6 @@
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
-
-    <!--<bean id="restsTweetsResource" class="com.isep.javaeeproject.web.RestTweetsResource"/>-->
 
     <jpa:repositories base-package="com.isep.javaeeproject.domain.repository"
                       entity-manager-factory-ref="entityManagerFactory"/>

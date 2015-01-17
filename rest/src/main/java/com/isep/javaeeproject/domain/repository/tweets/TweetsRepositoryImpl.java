@@ -11,9 +11,7 @@ public class TweetsRepositoryImpl extends AbstractRepository implements TweetsRe
 
     @Override
     public List<TweetsEntity> getAllTweets() {
-
         return getEntityManager().createQuery("FROM TweetsEntity ", TweetsEntity.class).getResultList();
-
     }
 
     @Override

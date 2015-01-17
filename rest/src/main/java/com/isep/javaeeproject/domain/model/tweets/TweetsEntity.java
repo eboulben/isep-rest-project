@@ -1,7 +1,5 @@
 package com.isep.javaeeproject.domain.model.tweets;
 
-import org.springframework.beans.BeanUtils;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -53,10 +51,14 @@ public class TweetsEntity implements Serializable {
     }
 
     public TweetsEntity(Tweets tweets) {
-        BeanUtils.copyProperties(this, tweets);
+        this.idTweets = tweets.getIdTweets();
+        this.idAuthor = tweets.getIdAuthor();
+        this.author = tweets.getAuthor();
+        this.message = tweets.getMessage();
+        this.date = tweets.getDate();
     }
 
-    @Id
+    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -65,6 +67,7 @@ public class TweetsEntity implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "id_tweets")
     public long getIdTweets() {
         return idTweets;
     }
@@ -73,6 +76,7 @@ public class TweetsEntity implements Serializable {
         this.idTweets = idTweets;
     }
 
+    @Column(name = "id_author")
     public long getIdAuthor() {
         return idAuthor;
     }
@@ -81,6 +85,7 @@ public class TweetsEntity implements Serializable {
         this.idAuthor = idAuthor;
     }
 
+    @Column(name = "author")
     public String getAuthor() {
         return author;
     }
@@ -89,6 +94,7 @@ public class TweetsEntity implements Serializable {
         this.author = author;
     }
 
+    @Column(name = "message")
     public String getMessage() {
         return message;
     }
@@ -97,6 +103,7 @@ public class TweetsEntity implements Serializable {
         this.message = message;
     }
 
+    @Column(name = "date")
     public Date getDate() {
         return date;
     }
