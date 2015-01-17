@@ -41,6 +41,8 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
 
+    <!--<bean id="restsTweetsResource" class="com.isep.javaeeproject.web.RestTweetsResource"/>-->
+
     <jpa:repositories base-package="com.isep.javaeeproject.domain.repository"
                       entity-manager-factory-ref="entityManagerFactory"/>
 
