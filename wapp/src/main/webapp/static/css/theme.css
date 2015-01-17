@@ -38,3 +38,7 @@
 .footer > div {
     text-align: center;
 }
+
+#update_button {
+    cursor: default;
+}

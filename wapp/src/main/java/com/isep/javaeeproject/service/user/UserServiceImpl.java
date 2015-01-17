@@ -14,6 +14,11 @@ public class UserServiceImpl implements UserService {
         return getMock();
     }
 
+    @Override
+    public List<TweetDto> getAllTweets() {
+        return getMock();
+    }
+
     private List<TweetDto> getMock() {
         List<TweetDto> result = new ArrayList<>();
         result.add(0, new TweetDto("Un message","01/05/2012", "AltoLabs"));

@@ -31,7 +31,6 @@
         </div>
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li id="menu-home"><a href="<c:url value="/home" />">Home</a></li>
                 <li id="button_dropdown" class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="">Filter authors<b
                             class="caret"></b></a>
@@ -44,13 +43,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li id="update_button"><a href="" onclick="return false">Update Database</a></li>
+                <li id="update_button"><a>Update Database</a></li>
             </ul>
-            <form role="search" class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" placeholder="Search" class="form-control">
-                </div>
-            </form>
         </div>
     </nav>
 
