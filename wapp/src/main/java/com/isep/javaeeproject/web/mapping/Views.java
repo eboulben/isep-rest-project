@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public enum Views {
 
-    HOME("home"), ERROR_404("errors/404"), USER("user/user"), USERS("users/users");
+    HOME("home"), ERROR_404("errors/404");
 
     @NotNull
     private final String path;
