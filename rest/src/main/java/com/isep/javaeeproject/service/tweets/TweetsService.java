@@ -10,4 +10,5 @@ public interface TweetsService {
 
     public Tweets getTweet(final long id);
 
+    List<Tweets> getTweetForUser(final String user);
 }

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,8 +19,7 @@ public class TweetsServiceImpl implements TweetsService {
     @Override
     public List<Tweets> getAllTweets() {
         List<TweetsEntity> allTweetsEntity = tweetsRepository.getAllTweets();
-        return Lists.transform(allTweetsEntity,
-                Tweets::new);
+        return Lists.transform(allTweetsEntity, Tweets::new);
     }
 
     @Override
@@ -32,4 +30,10 @@ public class TweetsServiceImpl implements TweetsService {
             return new Tweets();
         }
     }
- }
+
+    @Override
+    public List<Tweets> getTweetForUser(final String user) {
+        List<TweetsEntity> tweetsEntitiesForUser = tweetsRepository.getTweetForUser(user);
+        return Lists.transform(tweetsEntitiesForUser, Tweets::new);
+    }
+}

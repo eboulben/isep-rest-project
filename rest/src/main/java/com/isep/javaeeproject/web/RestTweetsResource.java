@@ -32,4 +32,11 @@ public class RestTweetsResource {
         return tweetsService.getTweet(id);
     }
 
+    @GET
+    @Path("/author/{user}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Tweets> allTweetsForUser(@PathParam("user") final String user) {
+        return tweetsService.getTweetForUser(user);
+    }
+
 }
