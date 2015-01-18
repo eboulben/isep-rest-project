@@ -1,6 +1,6 @@
 function callUpdate() {
     $.ajax({
-        url:"/home/update",
+        url:window.location.href+"/update",
         beforeSend: function() {
             $("#update_button").children().fadeOut("slow", function() {
                 $(this).html("Updating database").fadeIn("slow");
