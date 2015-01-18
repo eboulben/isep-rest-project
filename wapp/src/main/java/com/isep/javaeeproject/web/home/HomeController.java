@@ -43,11 +43,7 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(WebMapping.UPDATE)
     public String response() {
-        if (authorsService.updateDatabase()) {
-            return "1";
-        } else {
-            return "0";
-        }
+        return Integer.toString(tweetsService.updateDatabase());
     }
 
     @RequestMapping("/getTweet/{author}")

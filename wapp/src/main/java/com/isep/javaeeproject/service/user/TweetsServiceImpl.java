@@ -33,6 +33,11 @@ public class TweetsServiceImpl implements TweetsService {
         return getTweetDtos(tweets);
     }
 
+    @Override
+    public int updateDatabase() {
+        return 0;
+    }
+
     private List<Map<String, String>> getMaps(String urlFileName) {
         ObjectMapper mapper = new ObjectMapper();
         List<Map<String, String>> tweets;

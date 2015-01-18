@@ -12,11 +12,6 @@ import static com.isep.javaeeproject.web.mapping.RestMapping.*;
 public class AuthorsServiceImpl implements AuthorsService {
 
     @Override
-    public boolean updateDatabase() {
-        return true;
-    }
-
-    @Override
     public String[] getAuthors() {
         ObjectMapper mapper = new ObjectMapper();
         String[] users;

@@ -8,4 +8,6 @@ public interface TweetsService {
     public List<TweetDto> getTweets(String authorName);
 
     public List<TweetDto> getAllTweets();
+
+    public int updateDatabase();
 }
