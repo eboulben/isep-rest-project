@@ -1,10 +1,10 @@
 package com.isep.javaeeproject.service.home;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface HomeService {
 
     public boolean updateDatabase();
 
-    public ArrayList<String> getUsers();
+    public String[] getAuthors();
 }

@@ -1,6 +1,7 @@
 package com.isep.javaeeproject.web.home;
 
-import com.isep.javaeeproject.dto.user.TweetDto;
+import com.google.common.collect.Lists;
+import com.isep.javaeeproject.dto.tweet.TweetDto;
 import com.isep.javaeeproject.service.home.HomeService;
 import com.isep.javaeeproject.service.user.UserService;
 import com.isep.javaeeproject.web.mapping.Views;
@@ -32,7 +33,7 @@ public class HomeController {
     public ModelAndView home() {
         logger.info("home Controller logger demonstration");
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
-        List<String> users = homeService.getUsers();
+        List<String> users = Lists.newArrayList(homeService.getAuthors());
         List<TweetDto> tweets = userService.getAllTweets();
         mv.addObject("users", users);
         mv.addObject("tweets", tweets);
@@ -54,7 +55,7 @@ public class HomeController {
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
         List<TweetDto> tweets = userService.getTweets(author);
         mv.addObject("tweets", tweets);
-        mv.addObject("users", homeService.getUsers());
+        mv.addObject("users", homeService.getAuthors());
         return mv;
     }
 

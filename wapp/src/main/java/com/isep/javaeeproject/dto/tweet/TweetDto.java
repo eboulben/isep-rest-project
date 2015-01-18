@@ -1,4 +1,4 @@
-package com.isep.javaeeproject.dto.user;
+package com.isep.javaeeproject.dto.tweet;
 
 public class TweetDto {
     private String message;

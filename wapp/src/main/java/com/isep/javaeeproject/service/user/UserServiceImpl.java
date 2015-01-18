@@ -1,6 +1,6 @@
 package com.isep.javaeeproject.service.user;
 
-import com.isep.javaeeproject.dto.user.TweetDto;
+import com.isep.javaeeproject.dto.tweet.TweetDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
