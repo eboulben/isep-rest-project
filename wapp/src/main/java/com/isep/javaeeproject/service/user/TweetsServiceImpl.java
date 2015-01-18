@@ -6,9 +6,14 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,9 @@ import static com.isep.javaeeproject.web.mapping.RestMapping.*;
 
 @Service
 public class TweetsServiceImpl implements TweetsService {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
 
     @Override
     public List<TweetDto> getTweets(String authorName) {
@@ -35,6 +43,21 @@ public class TweetsServiceImpl implements TweetsService {
 
     @Override
     public int updateDatabase() {
+        try {
+            URL urlUpdate = new URL(PROTOCOL, HOSTNAME, PORT, REST_TWEETS_UPDATE);
+            HttpURLConnection httpCon = (HttpURLConnection) urlUpdate.openConnection();
+            httpCon.setDoOutput(true);
+            httpCon.setRequestMethod("PUT");
+            OutputStreamWriter out = new OutputStreamWriter(
+                    httpCon.getOutputStream());
+            out.write("Resource content");
+            out.close();
+            final InputStream inputStream = httpCon.getInputStream();
+            logger.info(inputStream.toString());
+            return 1;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 

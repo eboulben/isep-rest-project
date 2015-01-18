@@ -9,5 +9,6 @@ public final class RestMapping {
     public static final String REST_AUTHORS = "/rest/authors";
     public static final String REST_TWEETS = "/rest/tweets";
     public static final String REST_TWEETS_BY_AUTHOR = "/rest/tweets/author";
+    public static final String REST_TWEETS_UPDATE = "/rest/tweets/update";
 
 }
