@@ -24,7 +24,11 @@ function fadeMessage(message) {
     $("#update_button").children().fadeOut("slow", function() {
         $(this).html(message).fadeIn("slow", function() {
             $(this).fadeOut("slow", function() {
-                $(this).html("Update Database").fadeIn("slow");
+                $(this).html("Update Database").fadeIn("slow", function() {
+                    if(message == "Success") {
+                        location.reload();
+                    };
+                });
             });
         });
     });
