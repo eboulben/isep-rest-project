@@ -30,18 +30,21 @@
             <a href="<c:url value="/home" />" class="navbar-brand">Read Tweets</a>
         </div>
         <div id="navbarCollapse" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li id="button_dropdown" class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="">Filter authors<b
-                            class="caret"></b></a>
-                    <ul id="authors_box" role="menu" class="dropdown-menu">
-                        <c:forEach var="user" items="${users}">
-                            <li><a href="<c:url value="/home/getTweet/${user}"/>">${user}</a></li>
-                        </c:forEach>
-                    </ul>
+            <c:if test="${not empty users}">
+                <ul class="nav navbar-nav">
+                    <li id="button_dropdown" class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="">Filter authors<b
+                                class="caret"></b></a>
+                        <ul id="authors_box" role="menu" class="dropdown-menu">
+                            <c:forEach var="user" items="${users}">
+                                <li><a href="<c:url value="/home/getTweet/${user}"/>">${user}</a></li>
+                            </c:forEach>
+                        </ul>
 
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </c:if>
+
             <ul class="nav navbar-nav navbar-right">
                 <li id="update_button"><a>Update Database</a></li>
             </ul>
