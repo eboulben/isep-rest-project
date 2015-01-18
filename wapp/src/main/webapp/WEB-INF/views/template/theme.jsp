@@ -56,19 +56,19 @@
     <footer class="footer modal-footer">
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="<c:url value="/about"/>">About us</a>
+                <a href="http://www.isep.fr">Isep</a>
             </div>
             <div class="clearfix visible-xs-block"></div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="https://github.com/eboulben/isep-rest-project">Github</a>
+                Emilien Boulben
             </div>
             <div class="clearfix visible-sm-block visible-xs-block"></div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="">Jenkins</a>
+                Alexandre Joubert
             </div>
             <div class="clearfix visible-xs-block"></div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <a href="">Sonar</a>
+                Corentin Peuvrel
             </div>
         </div>
     </footer>
