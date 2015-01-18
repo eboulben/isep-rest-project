@@ -49,7 +49,7 @@ public class HomeController {
         }
     }
 
-    @RequestMapping(WebMapping.GET_TWEETS)
+    @RequestMapping("/getTweet/{author}")
     public ModelAndView responseTweets(@PathVariable("author") String author) {
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
         List<TweetDto> tweets = userService.getTweets(author);
