@@ -11,8 +11,7 @@ function callUpdate() {
             if(data == "1") {
                 fadeMessage("Success");
             } else {
-                $("#update_button").children().html("Update database");
-                alert("Database update failed");
+                fadeMessage("Error updating database");
             }
         });
 }
