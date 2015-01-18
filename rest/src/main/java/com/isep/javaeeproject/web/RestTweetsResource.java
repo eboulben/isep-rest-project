@@ -1,15 +1,15 @@
 package com.isep.javaeeproject.web;
 
 import com.isep.javaeeproject.domain.model.tweets.Tweets;
+import com.isep.javaeeproject.service.tweeter.TweeterService;
 import com.isep.javaeeproject.service.tweets.TweetsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Component
@@ -18,6 +18,9 @@ public class RestTweetsResource {
 
     @Autowired
     private TweetsService tweetsService;
+
+    @Autowired
+    private TweeterService tweeterService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -37,6 +40,16 @@ public class RestTweetsResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Tweets> allTweetsForUser(@PathParam("user") final String user) {
         return tweetsService.getTweetForUser(user);
+    }
+
+    @PUT
+    @Transactional
+    @Path("/update")
+    public Response update() {
+        tweeterService.refreshDataWithTwitterApi();
+        return Response.status(Response.Status.OK)
+                .entity("The database has been updated")
+                .header("Location", "http://localhost:8080/rest/tweets/update").build();
     }
 
 }

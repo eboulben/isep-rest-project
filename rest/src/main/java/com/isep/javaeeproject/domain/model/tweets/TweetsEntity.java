@@ -22,10 +22,6 @@ public class TweetsEntity implements Serializable {
     private long idTweets;
 
     @NotNull
-    @Column(nullable = false, name = "id_author")
-    private long idAuthor;
-
-    @NotNull
     @Size(max = 50)
     @Column(length = 50, nullable = false, name = "author")
     private String author;
@@ -42,9 +38,8 @@ public class TweetsEntity implements Serializable {
     public TweetsEntity() {
     }
 
-    public TweetsEntity(long idTweets, long idAuthor, String author, String message, Date date) {
+    public TweetsEntity(long idTweets, String author, String message, Date date) {
         this.idTweets = idTweets;
-        this.idAuthor = idAuthor;
         this.author = author;
         this.message = message;
         this.date = date;
@@ -52,7 +47,6 @@ public class TweetsEntity implements Serializable {
 
     public TweetsEntity(Tweets tweets) {
         this.idTweets = tweets.getIdTweets();
-        this.idAuthor = tweets.getIdAuthor();
         this.author = tweets.getAuthor();
         this.message = tweets.getMessage();
         this.date = tweets.getDate();
@@ -74,15 +68,6 @@ public class TweetsEntity implements Serializable {
 
     public void setIdTweets(long idTweets) {
         this.idTweets = idTweets;
-    }
-
-    @Column(name = "id_author")
-    public long getIdAuthor() {
-        return idAuthor;
-    }
-
-    public void setIdAuthor(long idAuthor) {
-        this.idAuthor = idAuthor;
     }
 
     @Column(name = "author")
@@ -119,18 +104,18 @@ public class TweetsEntity implements Serializable {
 
         TweetsEntity that = (TweetsEntity) o;
 
-        return idAuthor == that.idAuthor &&
-                idTweets == that.idTweets &&
-                author.equals(that.author) &&
-                date.equals(that.date) &&
-                message.equals(that.message);
+        if (id != that.id) return false;
+        if (idTweets != that.idTweets) return false;
+        if (!author.equals(that.author)) return false;
+        if (!date.equals(that.date)) return false;
+        if (!message.equals(that.message)) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (idTweets ^ (idTweets >>> 32));
-        result = 31 * result + (int) (idAuthor ^ (idAuthor >>> 32));
-        return result;
+        return (int) (idTweets ^ (idTweets >>> 32));
     }
 
     @Override
@@ -138,7 +123,6 @@ public class TweetsEntity implements Serializable {
         return "TweetsEntity{" +
                 "id=" + id +
                 ", idTweets=" + idTweets +
-                ", idAuthor=" + idAuthor +
                 ", author='" + author + '\'' +
                 ", message='" + message + '\'' +
                 ", date=" + date +
