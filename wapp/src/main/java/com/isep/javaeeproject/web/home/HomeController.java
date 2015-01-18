@@ -2,8 +2,8 @@ package com.isep.javaeeproject.web.home;
 
 import com.google.common.collect.Lists;
 import com.isep.javaeeproject.dto.tweet.TweetDto;
-import com.isep.javaeeproject.service.home.HomeService;
-import com.isep.javaeeproject.service.user.UserService;
+import com.isep.javaeeproject.service.home.AuthorsService;
+import com.isep.javaeeproject.service.user.TweetsService;
 import com.isep.javaeeproject.web.mapping.Views;
 import com.isep.javaeeproject.web.mapping.WebMapping;
 import org.slf4j.Logger;
@@ -24,17 +24,17 @@ public class HomeController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private HomeService homeService;
+    private AuthorsService authorsService;
 
     @Autowired
-    private UserService userService;
+    private TweetsService tweetsService;
 
     @RequestMapping
     public ModelAndView home() {
         logger.info("home Controller logger demonstration");
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
-        List<String> users = Lists.newArrayList(homeService.getAuthors());
-        List<TweetDto> tweets = userService.getAllTweets();
+        List<String> users = Lists.newArrayList(authorsService.getAuthors());
+        List<TweetDto> tweets = tweetsService.getAllTweets();
         mv.addObject("users", users);
         mv.addObject("tweets", tweets);
         return mv;
@@ -43,7 +43,7 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(WebMapping.UPDATE)
     public String response() {
-        if (homeService.updateDatabase()) {
+        if (authorsService.updateDatabase()) {
             return "1";
         } else {
             return "0";
@@ -53,9 +53,9 @@ public class HomeController {
     @RequestMapping("/getTweet/{author}")
     public ModelAndView responseTweets(@PathVariable("author") String author) {
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
-        List<TweetDto> tweets = userService.getTweets(author);
+        List<TweetDto> tweets = tweetsService.getTweets(author);
         mv.addObject("tweets", tweets);
-        mv.addObject("users", homeService.getAuthors());
+        mv.addObject("users", authorsService.getAuthors());
         return mv;
     }
 

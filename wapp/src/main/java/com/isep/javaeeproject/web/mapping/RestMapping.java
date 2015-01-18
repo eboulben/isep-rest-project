@@ -7,5 +7,7 @@ public final class RestMapping {
     public static final int PORT = 8080;
 
     public static final String REST_AUTHORS = "/rest/authors";
+    public static final String REST_TWEETS = "/rest/tweets";
+    public static final String REST_TWEETS_BY_AUTHOR = "/rest/tweets/author";
 
 }

@@ -2,7 +2,7 @@ package com.isep.javaeeproject.service.home;
 
 import java.util.List;
 
-public interface HomeService {
+public interface AuthorsService {
 
     public boolean updateDatabase();
 

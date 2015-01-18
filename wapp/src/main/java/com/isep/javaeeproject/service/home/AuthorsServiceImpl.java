@@ -9,7 +9,7 @@ import java.net.URL;
 import static com.isep.javaeeproject.web.mapping.RestMapping.*;
 
 @Service
-public class HomeServiceImpl implements HomeService {
+public class AuthorsServiceImpl implements AuthorsService {
 
     @Override
     public boolean updateDatabase() {

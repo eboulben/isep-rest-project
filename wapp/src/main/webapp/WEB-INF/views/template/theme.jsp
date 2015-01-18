@@ -36,7 +36,7 @@
                             class="caret"></b></a>
                     <ul id="authors_box" role="menu" class="dropdown-menu">
                         <c:forEach var="user" items="${users}">
-                            <li><a href="/home/getTweet/${user}">${user}</a></li>
+                            <li><a href="<c:url value="/home/getTweet/${user}"/>">${user}</a></li>
                         </c:forEach>
                     </ul>
 

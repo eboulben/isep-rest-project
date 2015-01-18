@@ -11,6 +11,12 @@ public class TweetDto {
         this.authorName = authorName;
     }
 
+    public TweetDto(Tweets tweets) {
+        this.message = tweets.getMessage();
+        this.date = tweets.getDate().toString();
+        this.authorName = tweets.getAuthor();
+    }
+
     public String getMessage() {
         return this.message;
     }
