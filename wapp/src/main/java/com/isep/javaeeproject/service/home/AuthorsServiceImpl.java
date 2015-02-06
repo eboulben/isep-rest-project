@@ -15,8 +15,7 @@ public class AuthorsServiceImpl implements AuthorsService {
 
     @Override
     public List<String> getAuthors() {
-        UrlContentRetriever retriever = new UrlContentRetriever();
-        String json = retriever.getContentFrom(REST_AUTHORS);
+        String json = new UrlContentRetriever().getContentFrom(REST_AUTHORS);
         return new Gson().fromJson(json, new TypeToken<ArrayList<String>>() {
         }.getType());
 
