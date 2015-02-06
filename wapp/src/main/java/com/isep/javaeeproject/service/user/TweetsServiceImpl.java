@@ -5,9 +5,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.isep.javaeeproject.dto.tweet.TweetDto;
+import com.isep.javaeeproject.utilities.UrlContentRetriever;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -50,43 +53,19 @@ public class TweetsServiceImpl implements TweetsService {
     }
 
     private List<TweetDto> getMaps(String urlFileName) {
-        List<TweetDto> tweets;
 
-        String json = "";
-        BufferedReader reader = null;
-        try {
-            URL url = new URL(PROTOCOL, HOSTNAME, PORT, urlFileName);
-            reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            StringBuilder buffer = new StringBuilder();
-            int read;
-            char[] chars = new char[1024];
-            while ((read = reader.read(chars)) != -1)
-                buffer.append(chars, 0, read);
+        UrlContentRetriever retriever = new UrlContentRetriever();
+        String jsonRequested = retriever.getContentFrom(urlFileName);
 
-            json = buffer.toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null)
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-        }
-
-        GsonBuilder builder = new GsonBuilder();
-
-        builder.registerTypeAdapter(Date.class,
-                (JsonDeserializer<Date>) (json2, typeOfT, context)
-                        -> new Date(json2.getAsJsonPrimitive().getAsLong()));
+        GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Date.class,
+                (JsonDeserializer<Date>) (json, typeOfT, context)
+                        -> new Date(json.getAsJsonPrimitive().getAsLong()));
 
         Gson gson = builder.create();
 
         Type type = new TypeToken<ArrayList<TweetDto>>() {
         }.getType();
-        tweets = gson.fromJson(json, type);
 
-        return tweets;
+        return gson.fromJson(jsonRequested, type);
     }
 }
