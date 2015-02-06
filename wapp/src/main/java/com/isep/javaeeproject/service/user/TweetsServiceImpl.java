@@ -53,19 +53,24 @@ public class TweetsServiceImpl implements TweetsService {
     }
 
     private List<TweetDto> getMaps(String urlFileName) {
+        String jsonRequested = getJsonFrom(urlFileName);
+        Gson gson = getGsonBuilderWithDateTimestampHandling().create();
+        return gson.fromJson(jsonRequested, getListOfTweetDtoType());
+    }
 
+    private String getJsonFrom(String urlFileName) {
         UrlContentRetriever retriever = new UrlContentRetriever();
-        String jsonRequested = retriever.getContentFrom(urlFileName);
+        return retriever.getContentFrom(urlFileName);
+    }
 
-        GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Date.class,
+    private GsonBuilder getGsonBuilderWithDateTimestampHandling() {
+        return new GsonBuilder().registerTypeAdapter(Date.class,
                 (JsonDeserializer<Date>) (json, typeOfT, context)
                         -> new Date(json.getAsJsonPrimitive().getAsLong()));
+    }
 
-        Gson gson = builder.create();
-
-        Type type = new TypeToken<ArrayList<TweetDto>>() {
-        }.getType();
-
-        return gson.fromJson(jsonRequested, type);
+    private Type getListOfTweetDtoType() {
+        return new TypeToken<ArrayList<TweetDto>>() {
+            }.getType();
     }
 }
