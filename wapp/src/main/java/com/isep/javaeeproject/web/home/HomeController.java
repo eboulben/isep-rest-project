@@ -1,10 +1,13 @@
 package com.isep.javaeeproject.web.home;
 
 import com.isep.javaeeproject.dto.tweet.TweetDto;
+import com.isep.javaeeproject.log.Log;
 import com.isep.javaeeproject.service.home.AuthorsService;
+import com.isep.javaeeproject.service.tweeter.TweeterApiConnectorService;
 import com.isep.javaeeproject.service.user.TweetsService;
 import com.isep.javaeeproject.web.mapping.Views;
 import com.isep.javaeeproject.web.mapping.WebMapping;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +27,12 @@ public class HomeController {
     @Autowired
     private TweetsService tweetsService;
 
+    @Autowired
+    private TweeterApiConnectorService connectorService;
+
+    @Log
+    Logger logger;
+
     @RequestMapping
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
@@ -37,6 +46,7 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(value = {WebMapping.UPDATE, "/getTweet/{}/update"})
     public String response() {
+        final List<TweetDto> tweets = connectorService.getTweetsFromApiByAuthors(authorsService.getAuthors());
         return Integer.toString(tweetsService.updateDatabase());
     }
 
