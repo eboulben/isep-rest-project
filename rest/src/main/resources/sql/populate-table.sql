@@ -1,7 +1,7 @@
 LOCK TABLES `rest_tweets`.`tweets` WRITE;
 
 INSERT INTO `rest_tweets`.`tweets`
-(id_tweets, id_author, author, message, date)
+(id_tweets, author, message, date)
 VALUES
   (9831683518, 'NagaSadow',
    'The Light Side chose Linux cause it has the power to liberate everyone. The dark Side chose it cause this power is unlimited',
