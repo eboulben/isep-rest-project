@@ -1,43 +1,60 @@
 package com.isep.javaeeproject.dto.tweet;
 
-public class TweetDto {
-    private String message;
-    private String date;
-    private String authorName;
+import java.util.Date;
 
-    public TweetDto(String message, String date, String authorName) {
+public class TweetDto {
+
+    private long idTweets;
+    private String message;
+    private Date date;
+    private String author;
+
+    public TweetDto(long idTweets, String author, String message, Date date) {
+        this.idTweets = idTweets;
         this.message = message;
         this.date = date;
-        this.authorName = authorName;
+        this.author = author;
     }
 
-    public TweetDto(Tweets tweets) {
-        this.message = tweets.getMessage();
-        this.date = tweets.getDate().toString();
-        this.authorName = tweets.getAuthor();
+    public long getIdTweets() {
+        return idTweets;
+    }
+
+    public void setIdTweets(long idTweets) {
+        this.idTweets = idTweets;
     }
 
     public String getMessage() {
-        return this.message;
+        return message;
     }
 
     public void setMessage(String message) {
         this.message = message;
     }
 
-    public String getDate() {
-        return this.date;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getAuthorName() {
-        return this.authorName;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    @Override
+    public String toString() {
+        return "TweetDto{" +
+                "idTweets=" + idTweets +
+                ", message='" + message + '\'' +
+                ", date=" + date +
+                ", author='" + author + '\'' +
+                '}';
     }
 }

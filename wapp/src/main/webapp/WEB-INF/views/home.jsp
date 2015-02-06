@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -18,8 +19,8 @@
     </thead>
     <c:forEach items="${tweets}" var="tweet">
         <tr>
-            <th> ${tweet.authorName} </th>
-            <th> ${tweet.date} </th>
+            <th> ${tweet.author} </th>
+            <th> <fmt:formatDate value="${tweet.date}" pattern="MM/dd/YYYY HH:mm:ss" /> </th>
             <th> ${tweet.message} </th>
         </tr>
     </c:forEach>

@@ -1,24 +1,21 @@
 package com.isep.javaeeproject.service.user;
 
-import com.google.common.collect.Lists;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 import com.isep.javaeeproject.dto.tweet.TweetDto;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.isep.javaeeproject.web.mapping.RestMapping.*;
 
@@ -30,15 +27,12 @@ public class TweetsServiceImpl implements TweetsService {
 
     @Override
     public List<TweetDto> getTweets(String authorName) {
-        List<Map<String, String>> tweets = getMaps(new StringBuilder().append(REST_TWEETS_BY_AUTHOR)
-                .append("/").append(authorName).toString());
-        return getTweetDtos(tweets);
+        return getMaps(REST_TWEETS_BY_AUTHOR + "/" + authorName);
     }
 
     @Override
     public List<TweetDto> getAllTweets() {
-        List<Map<String, String>> tweets = getMaps(REST_TWEETS);
-        return getTweetDtos(tweets);
+        return getMaps(REST_TWEETS);
     }
 
     @Override
@@ -61,29 +55,44 @@ public class TweetsServiceImpl implements TweetsService {
         return 0;
     }
 
-    private List<Map<String, String>> getMaps(String urlFileName) {
-        ObjectMapper mapper = new ObjectMapper();
-        List<Map<String, String>> tweets;
+    private List<TweetDto> getMaps(String urlFileName) {
+        List<TweetDto> tweets;
 
+        String json = "";
+        BufferedReader reader = null;
         try {
-            tweets = mapper.readValue(new URL(PROTOCOL, HOSTNAME, PORT, urlFileName),
-                    (new ArrayList<Map<String, String>>()).getClass());
+            URL url = new URL(PROTOCOL, HOSTNAME, PORT, urlFileName);
+            reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            StringBuilder buffer = new StringBuilder();
+            int read;
+            char[] chars = new char[1024];
+            while ((read = reader.read(chars)) != -1)
+                buffer.append(chars, 0, read);
+
+            json = buffer.toString();
         } catch (IOException e) {
             e.printStackTrace();
-            tweets = Lists.newArrayList();
+        } finally {
+            if (reader != null)
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         }
 
+        GsonBuilder builder = new GsonBuilder();
+
+        builder.registerTypeAdapter(Date.class,
+                (JsonDeserializer<Date>) (json2, typeOfT, context)
+                        -> new Date(json2.getAsJsonPrimitive().getAsLong()));
+
+        Gson gson = builder.create();
+
+        Type type = new TypeToken<ArrayList<TweetDto>>() {
+        }.getType();
+        tweets = gson.fromJson(json, type);
+
         return tweets;
-    }
-
-    private List<TweetDto> getTweetDtos(List<Map<String, String>> tweets) {
-        List<TweetDto> response = Lists.newArrayList();
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("dd/MM/yyyy");
-
-        response.addAll(tweets.stream().map(map -> new TweetDto(map.getOrDefault("message", ""),
-                new DateTime(map.getOrDefault("date", "0")).toString(formatter),
-                map.getOrDefault("author", ""))).collect(Collectors.toList()));
-
-        return response;
     }
 }
