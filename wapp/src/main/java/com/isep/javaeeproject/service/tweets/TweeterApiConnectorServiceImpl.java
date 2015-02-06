@@ -1,4 +1,4 @@
-package com.isep.javaeeproject.service.tweeter;
+package com.isep.javaeeproject.service.tweets;
 
 import com.google.common.collect.Lists;
 import com.isep.javaeeproject.dto.tweet.TweetDto;

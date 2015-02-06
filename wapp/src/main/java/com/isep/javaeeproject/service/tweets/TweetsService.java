@@ -1,4 +1,4 @@
-package com.isep.javaeeproject.service.user;
+package com.isep.javaeeproject.service.tweets;
 
 import com.isep.javaeeproject.dto.tweet.TweetDto;
 
@@ -9,5 +9,5 @@ public interface TweetsService {
 
     public List<TweetDto> getAllTweets();
 
-    public int updateDatabase();
+    public int updateDatabase(List<TweetDto> tweets);
 }

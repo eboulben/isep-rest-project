@@ -1,4 +1,4 @@
-package com.isep.javaeeproject.service.user;
+package com.isep.javaeeproject.service.tweets;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -34,15 +34,16 @@ public class TweetsServiceImpl implements TweetsService {
     }
 
     @Override
-    public int updateDatabase() {
+    public int updateDatabase(List<TweetDto> tweets) {
         try {
+            Gson gson = new Gson();
             URL urlUpdate = new URL(PROTOCOL, HOSTNAME, PORT, REST_TWEETS_UPDATE);
             HttpURLConnection httpCon = (HttpURLConnection) urlUpdate.openConnection();
             httpCon.setDoOutput(true);
             httpCon.setRequestMethod("PUT");
             OutputStreamWriter out = new OutputStreamWriter(
                     httpCon.getOutputStream());
-            out.write("Resource content");
+            out.write(gson.toJson(tweets));
             out.close();
             final InputStream inputStream = httpCon.getInputStream();
             return 1;

@@ -1,4 +1,4 @@
-package com.isep.javaeeproject.service.home;
+package com.isep.javaeeproject.service.author;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
