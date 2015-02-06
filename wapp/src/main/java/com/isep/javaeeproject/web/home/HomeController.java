@@ -36,7 +36,7 @@ public class HomeController {
     }
 
     @ResponseBody
-    @RequestMapping(value = {WebMapping.UPDATE, "/getTweet/{author}/update"})
+    @RequestMapping(value = {WebMapping.UPDATE, "/getTweet/{}/update"})
     public String response() {
         return Integer.toString(tweetsService.updateDatabase());
     }
