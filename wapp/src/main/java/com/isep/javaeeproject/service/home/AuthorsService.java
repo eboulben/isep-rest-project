@@ -1,6 +1,8 @@
 package com.isep.javaeeproject.service.home;
 
+import java.util.List;
+
 public interface AuthorsService {
 
-    public String[] getAuthors();
+    public List<String> getAuthors();
 }

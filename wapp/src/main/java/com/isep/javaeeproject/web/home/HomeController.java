@@ -1,6 +1,5 @@
 package com.isep.javaeeproject.web.home;
 
-import com.google.common.collect.Lists;
 import com.isep.javaeeproject.dto.tweet.TweetDto;
 import com.isep.javaeeproject.service.home.AuthorsService;
 import com.isep.javaeeproject.service.user.TweetsService;
@@ -28,7 +27,7 @@ public class HomeController {
     @RequestMapping
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
-        List<String> users = Lists.newArrayList(authorsService.getAuthors());
+        List<String> users = authorsService.getAuthors();
         List<TweetDto> tweets = tweetsService.getAllTweets();
         mv.addObject("users", users);
         mv.addObject("tweets", tweets);
