@@ -6,8 +6,6 @@ import com.isep.javaeeproject.service.home.AuthorsService;
 import com.isep.javaeeproject.service.user.TweetsService;
 import com.isep.javaeeproject.web.mapping.Views;
 import com.isep.javaeeproject.web.mapping.WebMapping;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +19,6 @@ import java.util.List;
 @RequestMapping(WebMapping.HOME)
 public class HomeController {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
     @Autowired
     private AuthorsService authorsService;
 
@@ -31,7 +27,6 @@ public class HomeController {
 
     @RequestMapping
     public ModelAndView home() {
-        logger.info("home Controller logger demonstration");
         ModelAndView mv = new ModelAndView(Views.HOME.getPath());
         List<String> users = Lists.newArrayList(authorsService.getAuthors());
         List<TweetDto> tweets = tweetsService.getAllTweets();
@@ -41,7 +36,7 @@ public class HomeController {
     }
 
     @ResponseBody
-    @RequestMapping(value={WebMapping.UPDATE, "/getTweet/{author}/update"})
+    @RequestMapping(value = {WebMapping.UPDATE, "/getTweet/{author}/update"})
     public String response() {
         return Integer.toString(tweetsService.updateDatabase());
     }

@@ -5,8 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.isep.javaeeproject.dto.tweet.TweetDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -21,9 +19,6 @@ import static com.isep.javaeeproject.web.mapping.RestMapping.*;
 
 @Service
 public class TweetsServiceImpl implements TweetsService {
-
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
 
     @Override
     public List<TweetDto> getTweets(String authorName) {
@@ -47,7 +42,6 @@ public class TweetsServiceImpl implements TweetsService {
             out.write("Resource content");
             out.close();
             final InputStream inputStream = httpCon.getInputStream();
-            logger.info(inputStream.toString());
             return 1;
         } catch (IOException e) {
             e.printStackTrace();
