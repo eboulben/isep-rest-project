@@ -36,4 +36,14 @@ public class TweetsServiceImpl implements TweetsService {
         List<TweetsEntity> tweetsEntitiesForUser = tweetsRepository.getTweetForUser(user);
         return Lists.transform(tweetsEntitiesForUser, Tweets::new);
     }
+
+    @Override
+    public void updateTweets(List<Tweets> tweets) {
+        if (!tweets.isEmpty()) {
+            tweetsRepository.purge();
+            List<TweetsEntity> tweetsEntities = Lists.transform(tweets,
+                    TweetsEntity::new);
+            tweetsRepository.insert(tweetsEntities);
+        }
+    }
 }

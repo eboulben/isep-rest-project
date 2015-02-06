@@ -10,6 +10,5 @@ public abstract class AbstractRepository {
 
     protected EntityManager getEntityManager() {
         return entityManager;
-
     }
 }

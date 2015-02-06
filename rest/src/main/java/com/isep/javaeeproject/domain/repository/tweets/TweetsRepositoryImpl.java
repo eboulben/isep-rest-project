@@ -2,6 +2,7 @@ package com.isep.javaeeproject.domain.repository.tweets;
 
 import com.isep.javaeeproject.domain.model.tweets.TweetsEntity;
 import com.isep.javaeeproject.domain.repository.AbstractRepository;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -27,5 +28,16 @@ public class TweetsRepositoryImpl extends AbstractRepository implements TweetsRe
         return getEntityManager()
                 .createQuery("FROM TweetsEntity T WHERE T.author = :nameUser", TweetsEntity.class)
                 .setParameter("nameUser", user).getResultList();
+    }
+
+    @Override
+    public void purge() {
+        getEntityManager().createQuery("DELETE FROM TweetsEntity ").executeUpdate();
+    }
+
+    @Override
+    public void insert(List<TweetsEntity> tweets) {
+        final Session session = getEntityManager().unwrap(Session.class);
+        tweets.forEach(session::save);
     }
 }

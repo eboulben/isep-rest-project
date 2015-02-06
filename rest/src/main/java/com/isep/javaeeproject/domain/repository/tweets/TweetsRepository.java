@@ -12,4 +12,8 @@ public interface TweetsRepository {
     public TweetsEntity getTweet(final long id) throws NoResultException;
 
     List<TweetsEntity> getTweetForUser(final String user);
+
+    void purge();
+
+    void insert(List<TweetsEntity> tweets);
 }
