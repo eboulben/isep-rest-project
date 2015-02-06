@@ -20,7 +20,7 @@
     <c:forEach items="${tweets}" var="tweet">
         <tr>
             <th> ${tweet.author} </th>
-            <th> <fmt:formatDate value="${tweet.date}" pattern="MM/dd/YYYY HH:mm:ss" /> </th>
+            <th><fmt:formatDate value="${tweet.date}" pattern="MM/dd/YYYY HH:mm:ss"/></th>
             <th> ${tweet.message} </th>
         </tr>
     </c:forEach>

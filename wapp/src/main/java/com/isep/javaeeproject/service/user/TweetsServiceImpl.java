@@ -71,6 +71,6 @@ public class TweetsServiceImpl implements TweetsService {
 
     private Type getListOfTweetDtoType() {
         return new TypeToken<ArrayList<TweetDto>>() {
-            }.getType();
+        }.getType();
     }
 }

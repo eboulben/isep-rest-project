@@ -18,7 +18,6 @@ public class AuthorsServiceImpl implements AuthorsService {
         String json = new UrlContentRetriever().getContentFrom(REST_AUTHORS);
         return new Gson().fromJson(json, new TypeToken<ArrayList<String>>() {
         }.getType());
-
     }
 
 }

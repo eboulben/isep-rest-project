@@ -21,17 +21,14 @@ import java.util.List;
 @RequestMapping(WebMapping.HOME)
 public class HomeController {
 
-    @Autowired
-    private AuthorsService authorsService;
-
-    @Autowired
-    private TweetsService tweetsService;
-
-    @Autowired
-    private TweeterApiConnectorService connectorService;
-
     @Log
     Logger logger;
+    @Autowired
+    private AuthorsService authorsService;
+    @Autowired
+    private TweetsService tweetsService;
+    @Autowired
+    private TweeterApiConnectorService connectorService;
 
     @RequestMapping
     public ModelAndView home() {

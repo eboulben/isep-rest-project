@@ -14,13 +14,12 @@ import java.util.List;
 @Service
 public class TweeterApiConnectorServiceImpl implements TweeterApiConnectorService {
 
-    @Log
-    Logger logger;
-
     private static final String TWITTER_CONSUMER_KEY = "7hWgkMsYODIzGT6lPnRiIeAjK";
     private static final String TWITTER_SECRET_KEY = "Dy3awOwow52xivlisbab1m52FpRnud0cCwOHDxM3CfG5NCsV8v";
     private static final String TWITTER_ACCESS_TOKEN = "2978155090-CMvEQjCXPo6uFiMhzBGWWiIEJt8eKoqThBV4e39";
     private static final String TWITTER_ACCESS_TOKEN_SECRET = "rq277m8NZEvNGFZ5MFfVvTJZf4OvG9ONccjE7SwNFhx4r";
+    @Log
+    Logger logger;
 
     @Override
     public List<TweetDto> getTweetsFromApiByAuthors(List<String> authors) {
