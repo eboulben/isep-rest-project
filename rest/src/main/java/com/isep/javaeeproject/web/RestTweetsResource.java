@@ -43,7 +43,7 @@ public class RestTweetsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     @Path("/update")
-    public Response update(String tweets) {
+    public Response update(final String tweets) {
         tweetsService.updateTweets(tweets);
         return Response.status(Response.Status.OK)
                 .entity("The database has been updated")

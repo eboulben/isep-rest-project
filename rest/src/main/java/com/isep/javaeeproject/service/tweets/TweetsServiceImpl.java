@@ -47,9 +47,9 @@ public class TweetsServiceImpl implements TweetsService {
     }
 
     @Override
-    public void updateTweets(String tweets) {
+    public void updateTweets(final String tweets) {
         List<Tweets> listTweet = getListTweets(tweets);
-        if (!tweets.isEmpty()) {
+        if (!listTweet.isEmpty()) {
             tweetsRepository.purge();
             List<TweetsEntity> tweetsEntities = Lists.transform(listTweet,
                     TweetsEntity::new);
@@ -57,7 +57,7 @@ public class TweetsServiceImpl implements TweetsService {
         }
     }
 
-    private List<Tweets> getListTweets(String tweets) {
+    private List<Tweets> getListTweets(final String tweets) {
         Gson gson = getGsonConfigured();
         Type type = getTypeListOfTweets();
         return gson.fromJson(tweets, type);
