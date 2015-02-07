@@ -12,11 +12,11 @@
 	    http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <bean id="moduleDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"
-          p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://localhost:3306/rest_tweets"
+          p:driverClassName="${db.driver}"
+          p:url="${db.url}"
           p:defaultAutoCommit="false"
-          p:username="emilien"
-          p:password="oiupherg97y235tikhsreg9ow4hjgefg9"
+          p:username="${db.username}"
+          p:password="${db.password}"
           p:maxIdle="8"
           p:testOnBorrow="false"
           p:testWhileIdle="false"
@@ -49,5 +49,7 @@
     <context:component-scan base-package="com.isep.javaeeproject.service"/>
     <context:component-scan base-package="com.isep.javaeeproject.web"/>
     <context:component-scan base-package="com.isep.javaeeproject.log"/>
+
+    <context:property-placeholder location="${user.dir}/rest.config" />
 
 </beans>
