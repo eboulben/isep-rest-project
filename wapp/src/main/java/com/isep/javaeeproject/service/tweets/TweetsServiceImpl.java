@@ -20,11 +20,8 @@ import static com.isep.javaeeproject.web.mapping.RestMapping.*;
 @Service
 public class TweetsServiceImpl implements TweetsService {
 
-    @Log
-    Logger logger;
-
     @Override
-    public List<TweetDto> getTweets(String authorName) {
+    public List<TweetDto> getTweets(final String authorName) {
         return getMaps(REST_TWEETS_BY_AUTHOR + "/" + authorName);
     }
 
@@ -34,22 +31,19 @@ public class TweetsServiceImpl implements TweetsService {
     }
 
     @Override
-    public int updateDatabase(List<TweetDto> tweets) {
+    public int updateDatabase(final List<TweetDto> tweets) {
         String json = new Gson().toJson(tweets);
-        logger.info(json);
-        UrlHandler urlHandler = new UrlHandler();
-        return urlHandler.putToRest(json, REST_TWEETS_UPDATE);
+        return new UrlHandler().putToRest(json, REST_TWEETS_UPDATE);
     }
 
-    private List<TweetDto> getMaps(String urlFileName) {
+    private List<TweetDto> getMaps(final String urlFileName) {
         String jsonRequested = getJsonFrom(urlFileName);
         Gson gson = getGsonBuilderWithDateTimestampHandling().create();
         return gson.fromJson(jsonRequested, getListOfTweetDtoType());
     }
 
-    private String getJsonFrom(String urlFileName) {
-        UrlHandler retriever = new UrlHandler();
-        return retriever.getContentFrom(urlFileName);
+    private String getJsonFrom(final String urlFileName) {
+        return new UrlHandler().getContentFrom(urlFileName);
     }
 
     private GsonBuilder getGsonBuilderWithDateTimestampHandling() {

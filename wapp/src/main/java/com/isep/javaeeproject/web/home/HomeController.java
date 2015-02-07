@@ -21,8 +21,6 @@ import java.util.List;
 @RequestMapping(WebMapping.HOME)
 public class HomeController {
 
-    @Log
-    Logger logger;
     @Autowired
     private AuthorsService authorsService;
     @Autowired
@@ -43,9 +41,8 @@ public class HomeController {
     @ResponseBody
     @RequestMapping(value = {WebMapping.UPDATE, "/getTweet/{}/update"})
     public String response() {
-        final List<TweetDto> tweets = connectorService.getTweetsFromApiByAuthors(authorsService.getAuthors());
-        int result = tweetsService.updateDatabase(tweets);
-        return Integer.toString(result);
+        List<TweetDto> tweets = connectorService.getTweetsFromApiByAuthors(authorsService.getAuthors());
+        return Integer.toString(tweetsService.updateDatabase(tweets));
     }
 
     @RequestMapping("/getTweet/{author}")
