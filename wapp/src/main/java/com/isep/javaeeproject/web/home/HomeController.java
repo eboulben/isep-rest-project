@@ -2,9 +2,9 @@ package com.isep.javaeeproject.web.home;
 
 import com.isep.javaeeproject.dto.tweet.TweetDto;
 import com.isep.javaeeproject.log.Log;
-import com.isep.javaeeproject.service.home.AuthorsService;
-import com.isep.javaeeproject.service.tweeter.TweeterApiConnectorService;
-import com.isep.javaeeproject.service.user.TweetsService;
+import com.isep.javaeeproject.service.author.AuthorsService;
+import com.isep.javaeeproject.service.tweets.TweeterApiConnectorService;
+import com.isep.javaeeproject.service.tweets.TweetsService;
 import com.isep.javaeeproject.web.mapping.Views;
 import com.isep.javaeeproject.web.mapping.WebMapping;
 import org.slf4j.Logger;
@@ -44,7 +44,8 @@ public class HomeController {
     @RequestMapping(value = {WebMapping.UPDATE, "/getTweet/{}/update"})
     public String response() {
         final List<TweetDto> tweets = connectorService.getTweetsFromApiByAuthors(authorsService.getAuthors());
-        return Integer.toString(tweetsService.updateDatabase());
+        int result = tweetsService.updateDatabase(tweets);
+        return Integer.toString(result);
     }
 
     @RequestMapping("/getTweet/{author}")

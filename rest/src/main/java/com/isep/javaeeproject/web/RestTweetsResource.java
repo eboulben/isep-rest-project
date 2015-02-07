@@ -1,9 +1,7 @@
 package com.isep.javaeeproject.web;
 
 import com.isep.javaeeproject.domain.model.tweets.Tweets;
-import com.isep.javaeeproject.log.Log;
 import com.isep.javaeeproject.service.tweets.TweetsService;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +14,6 @@ import java.util.List;
 @Component
 @Path("tweets")
 public class RestTweetsResource {
-
-    @Log
-    Logger logger;
 
     @Autowired
     private TweetsService tweetsService;
@@ -48,8 +43,7 @@ public class RestTweetsResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_HTML)
     @Path("/update")
-    public Response update(List<Tweets> tweets) {
-        logger.info(tweets.toString());
+    public Response update(String tweets) {
         tweetsService.updateTweets(tweets);
         return Response.status(Response.Status.OK)
                 .entity("The database has been updated")

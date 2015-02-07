@@ -12,5 +12,5 @@ public interface TweetsService {
 
     List<Tweets> getTweetForUser(final String user);
 
-    void updateTweets(List<Tweets> tweets);
+    void updateTweets(String tweets);
 }
