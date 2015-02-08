@@ -1,7 +1,9 @@
-package com.isep.javaeeproject.utilities;
+package com.isep.javaeeproject.service.urlHandler;
 
 import com.isep.javaeeproject.log.Log;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,22 +13,28 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.isep.javaeeproject.web.mapping.RestMapping.*;
-
-public class UrlHandler {
+@Component
+public class UrlHandlerImpl implements UrlHandler {
 
     @Log
-    Logger logger;
+    private Logger logger;
+    private URL url;
+    private HttpURLConnection httpURLConnection;
+    @Value("${rest.protocol}")
+    private String protocol;
+    @Value("${rest.hostname}")
+    private String hostname;
+    @Value("${rest.port}")
+    private int port;
 
-    URL url;
-    HttpURLConnection httpURLConnection;
-
+    @Override
     public String getContentFrom(String urlParameters) {
         if (defineSuccessfullyUrlWith(urlParameters))
             return getContent();
         return "";
     }
 
+    @Override
     public int putToRest(String tweets, String urlParameter) {
         if (defineSuccessfullyUrlWith(urlParameter))
             return updateRestWith(tweets);
@@ -35,7 +43,7 @@ public class UrlHandler {
 
     private boolean defineSuccessfullyUrlWith(String urlParameters) {
         try {
-            this.url = new URL(PROTOCOL, HOSTNAME, PORT, urlParameters);
+            this.url = new URL(protocol, hostname, port, urlParameters);
             return true;
         } catch (MalformedURLException e) {
             logger.error("MalformedURLException in defineSuccessfullyUrlWith with parameters" + urlParameters);

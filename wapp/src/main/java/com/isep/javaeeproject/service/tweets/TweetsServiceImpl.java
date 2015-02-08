@@ -5,9 +5,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.isep.javaeeproject.dto.tweet.TweetDto;
-import com.isep.javaeeproject.log.Log;
-import com.isep.javaeeproject.utilities.UrlHandler;
-import org.slf4j.Logger;
+import com.isep.javaeeproject.service.urlHandler.UrlHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
@@ -15,25 +15,33 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.isep.javaeeproject.web.mapping.RestMapping.*;
-
 @Service
 public class TweetsServiceImpl implements TweetsService {
 
+    @Value("${rest.tweets.authors}")
+    private String tweetsByAuthors;
+    @Value("${rest.tweets}")
+    private String tweets;
+    @Value("${rest.tweets.update}")
+    private String tweetsUpdate;
+
+    @Autowired
+    private UrlHandler urlHandler;
+
     @Override
     public List<TweetDto> getTweets(final String authorName) {
-        return getMaps(REST_TWEETS_BY_AUTHOR + "/" + authorName);
+        return getMaps(tweetsByAuthors + authorName);
     }
 
     @Override
     public List<TweetDto> getAllTweets() {
-        return getMaps(REST_TWEETS);
+        return getMaps(tweets);
     }
 
     @Override
     public int updateDatabase(final List<TweetDto> tweets) {
         String json = new Gson().toJson(tweets);
-        return new UrlHandler().putToRest(json, REST_TWEETS_UPDATE);
+        return urlHandler.putToRest(json, tweetsUpdate);
     }
 
     private List<TweetDto> getMaps(final String urlFileName) {
@@ -43,7 +51,7 @@ public class TweetsServiceImpl implements TweetsService {
     }
 
     private String getJsonFrom(final String urlFileName) {
-        return new UrlHandler().getContentFrom(urlFileName);
+        return urlHandler.getContentFrom(urlFileName);
     }
 
     private GsonBuilder getGsonBuilderWithDateTimestampHandling() {
