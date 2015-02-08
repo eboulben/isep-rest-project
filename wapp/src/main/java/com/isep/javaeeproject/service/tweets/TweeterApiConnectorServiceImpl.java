@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.isep.javaeeproject.dto.tweet.TweetDto;
 import com.isep.javaeeproject.log.Log;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
@@ -14,10 +15,14 @@ import java.util.List;
 @Service
 public class TweeterApiConnectorServiceImpl implements TweeterApiConnectorService {
 
-    private static final String TWITTER_CONSUMER_KEY = "7hWgkMsYODIzGT6lPnRiIeAjK";
-    private static final String TWITTER_SECRET_KEY = "Dy3awOwow52xivlisbab1m52FpRnud0cCwOHDxM3CfG5NCsV8v";
-    private static final String TWITTER_ACCESS_TOKEN = "2978155090-CMvEQjCXPo6uFiMhzBGWWiIEJt8eKoqThBV4e39";
-    private static final String TWITTER_ACCESS_TOKEN_SECRET = "rq277m8NZEvNGFZ5MFfVvTJZf4OvG9ONccjE7SwNFhx4r";
+    @Value("${tweeter.consumer.key}")
+    private String TWITTER_CONSUMER_KEY;
+    @Value("${tweeter.secret.key}")
+    private String TWITTER_SECRET_KEY;
+    @Value("${tweeter.access.token}")
+    private String TWITTER_ACCESS_TOKEN;
+    @Value("${tweeter.access.token.secret}")
+    private String TWITTER_ACCESS_TOKEN_SECRET;
     @Log
     Logger logger;
 
@@ -57,6 +62,10 @@ public class TweeterApiConnectorServiceImpl implements TweeterApiConnectorServic
 
     private Twitter getTwitterObjectConfigured() {
         ConfigurationBuilder cb = new ConfigurationBuilder();
+        logger.info(TWITTER_CONSUMER_KEY);
+        logger.info(TWITTER_SECRET_KEY);
+        logger.info(TWITTER_ACCESS_TOKEN);
+        logger.info(TWITTER_ACCESS_TOKEN_SECRET);
         cb.setDebugEnabled(true)
                 .setOAuthConsumerKey(TWITTER_CONSUMER_KEY)
                 .setOAuthConsumerSecret(TWITTER_SECRET_KEY)
